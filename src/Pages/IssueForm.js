@@ -31,8 +31,6 @@ function IssueForm() {
       secondchoices: "", thirdchoices: "", notes: "", deadLine: "", file: "" ,to:""
     },
     validate: {
-      issueType: (value) =>
-        value == undefined ? null : "Please Choose Issue Type",
       department: (value) =>
         value.length > 0 ? null : "Please Choose Department",
       companies: (value) =>
@@ -56,7 +54,9 @@ function IssueForm() {
       Swal.fire({  title: "Issue Saved", icon: "info", confirmButtonText: "ok", });
       console.log(form.values);
     } else {
+
       form.validate();
+      console.log(form.errors)
       if (form.validate().hasErrors) {
         console.log("Invalid Data");
         Swal.fire({ title: "please fill the form", icon: "error", confirmButtonText: "ok", });
