@@ -95,7 +95,7 @@ function IssueForm() {
 
   return (
     <form>
-      <Center className={classes.wrapper}>
+      <Center className={classes.wrapper} style={{padding:"10%"}}>
         <Image maw={240} mx="auto" radius="md" src={logoImage} alt="" />
         <Grid>
           <Grid.Col
