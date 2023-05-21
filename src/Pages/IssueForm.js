@@ -18,7 +18,6 @@ function IssueForm() {
   const [lodded, setIslodded] = useState(false);
   const [delteValue, setdelteValue] = useState(false);
   const isMobile = useMediaQuery("(max-width: 767px)");
-  const [issueError, setIssueError] = useState(false);
 
   useEffect(() => {
     if (form.values && delteValue === true) {
@@ -32,6 +31,8 @@ function IssueForm() {
       secondchoices: "", thirdchoices: "", notes: "", deadLine: "", file: "" ,to:""
     },
     validate: {
+      issueType: (value) =>
+        value == undefined ? null : "Please Choose Issue Type",
       department: (value) =>
         value.length > 0 ? null : "Please Choose Department",
       companies: (value) =>
@@ -56,8 +57,6 @@ function IssueForm() {
       console.log(form.values);
     } else {
       form.validate();
-      form.issueType === undefined ?  setIssueError({...issueError,type:true}) : setIssueError({...issueError,type:false})
-      form.department === undefined ?  setIssueError({...issueError,department:true}) : setIssueError({...issueError,department:false})
       if (form.validate().hasErrors) {
         console.log("Invalid Data");
         Swal.fire({ title: "please fill the form", icon: "error", confirmButtonText: "ok", });
@@ -103,6 +102,7 @@ function IssueForm() {
             span={isMobile ? 12 : 6}
             style={isMobile ? { marginBottom: "1rem" } : {}}
           >
+            <div>
             <Swicher
               value={form.issueType}
               label={"Issue Type:"}
@@ -113,9 +113,11 @@ function IssueForm() {
               required
               delteValue={delteValue}
             />
-            {issueError.type && <span style={{color:"red"}}>Please Select Essue Type</span>}
+            </div>
           </Grid.Col>
           <Grid.Col span={isMobile ? 12 : 6}>
+            <div>
+
             <SelectOne
               name="department"
               HandelSetData={getChildData}
@@ -124,9 +126,9 @@ function IssueForm() {
               value={form.department}
               {...form.getInputProps("department")}
               delteValue={delteValue}
-              requird
+              required
               />
-              {issueError.department && <span style={{color:"red"}}>Please Select Department</span>}
+              </div>
           </Grid.Col>
           <ChickList
             label={"Related to:"}
